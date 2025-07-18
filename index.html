@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>янтарка</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+    <style>
+        /* Стили для нашей страницы и 3D-просмотрщика */
+        body {
+            margin: 0;
+            overflow: hidden; /* Скрываем полосы прокрутки, так как модель будет занимать весь экран */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Минимальная высота - весь экран */
+            background-color: #f0f0f0; /* Легкий серый фон */
+            font-family: sans-serif; /* Простой шрифт */
+            color: #333;
+        }
+        model-viewer {
+            width: 100%; /* Ширина на весь экран */
+            height: 100vh; /* Высота на весь экран */
+            display: block; /* Важно для корректного отображения */
+            --poster-color: #cccccc; /* Цвет фона, пока модель загружается */
+            border: none; /* Убираем рамку по умолчанию */
+        }
+        .info-text {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10; /* Убедимся, что текст поверх модели */
+            font-size: 14px;
+        }
+        .legend-color {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            margin-right: 6px;
+            border-radius: 3px;
+            vertical-align: middle;
+            border: 1px solid #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="info-text" id="infoText">
+        <div id="infoInstructions">
+        Поворачивайте: тяните одним пальцем.<br>
+        Масштабируйте: сводите/разводите два пальца.<br>
+        Панорамирование: тяните двумя пальцами.<br>
+        </div>
+        <button id="toggleInfo" style="display:block; margin:10px auto 0 auto; cursor:pointer; background:none; border:none; font-size:18px;">▲</button>
+        <div id="infoLegend">
+        Доска обрезанная:<br>
+        <span class="legend-color" style="background: #9E0000FF;"></span>- 100х50<br>
+        <span class="legend-color" style="background: #4B0000FF;"></span>- 200х50<br>
+        <span class="legend-color" style="background: #A52A2AFF;"></span>- 100х25<br>
+        <span class="legend-color" style="background: #C30000FF;"></span>- 150х25<br>
+        <br>
+        Доска строганная:<br>
+        <span class="legend-color" style="background: #FFC125FF;"></span>- 145х45<br>
+        <span class="legend-color" style="background: #DAA520FF;"></span>- 120х20<br>
+        <span class="legend-color" style="background: #A5780AFF;"></span>- 195х45<br>
+        <span class="legend-color" style="background: #D2B48CFF;"></span>- 145х20<br>
+        <span class="legend-color" style="background: #D0CCA7FF;"></span>- 95х45<br>
+        <br>
+        Брус:<br>
+        <span class="legend-color" style="background: #A0522DFF;"></span>- 50х50<br>
+        <br>
+        Брус строганный:<br>
+        <span class="legend-color" style="background: #E71D25FF;"></span>- 50х20<br>
+
+        </div>
+    </div>
+
+    <model-viewer
+        src="yantarka_end.glb"  alt="Полная модель"
+        camera-controls           
+        touch-action="pan-y"      
+        auto-rotate               
+        auto-rotate-delay="100000"  
+        rotation-per-second="0.2rad" 
+        shadow-intensity="1"      
+        environment-image="neutral" exposure="1"              
+        loading="eager"           ar                        
+        ar-modes="webxr scene-viewer quick-look" >
+    </model-viewer>
+<script>
+    const toggleBtn = document.getElementById('toggleInfo');
+    const infoLegend = document.getElementById('infoLegend');
+    let collapsed = false;
+    toggleBtn.addEventListener('click', function() {
+        collapsed = !collapsed;
+        if (collapsed) {
+            infoLegend.style.display = 'none';
+            toggleBtn.textContent = '▼';
+        } else {
+            infoLegend.style.display = '';
+            toggleBtn.textContent = '▲';
+        }
+    });
+</script>
+</body>
+</html>
